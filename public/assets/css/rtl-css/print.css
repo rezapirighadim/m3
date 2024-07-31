@@ -1,0 +1,38 @@
+
+@font-face {
+    font-family:"iransans";
+    src: url('../../font/iransansr.eot');
+    src: url('../../font/iransansr.eot?#iefix') format('embedded-opentype'),
+    url('../../font/iransansr.woff') format('woff'),
+    url('../../font/iransansr.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+    font-family: "iransans", 'PT Sans', sans-serif;
+    direction: rtl;
+    font-size: 14px;
+    height: 100%;
+    background: #f9f9f9;
+}
+
+.print_preview{
+    font-family: "iransans", 'PT Sans', sans-serif;
+    width:48mm;
+    height: 90mm;
+    background-color: #fff;
+    margin: auto;
+    border: 1px solid #ccc;
+}
+.print_preview_details{
+    font-family: "iransans", 'PT Sans', sans-serif;
+    margin:4mm;
+    /*padding:2mm;*/
+    /*padding-bottom: 3mm;*/
+    border-bottom: 1px dashed #000;
+}
+
+.price-back{
+    background-color: #000;
+    color: #fff;
+}
