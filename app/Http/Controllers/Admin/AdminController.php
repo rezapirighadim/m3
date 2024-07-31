@@ -20,12 +20,13 @@ class AdminController extends Controller
 
     public function __construct() {
         $this->middleware(function ($request, $next) {
-            if (\Auth::user()->role == 'admin' || \Auth::user()->role == 'seller' ) {
-                $this->role =  \Auth::user()->role;
-                $this->seller_id = $this->role == 'admin' ? 0 : \Auth::user()->id;
-            }else{
+
+            if (\Auth::user()->role != 'admin' ) {
                 exit('forbidden access');
             }
+            $this->role =  \Auth::user()->role;
+            $this->seller_id = $this->role == 'admin' ? 0 : \Auth::user()->id;
+
             return $next($request);
         });
 

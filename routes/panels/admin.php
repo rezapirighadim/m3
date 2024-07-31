@@ -20,6 +20,12 @@ Route::namespace('Admin')->prefix('admin')->middleware([ 'ConvertArabic2Persian'
     Route::post('/site_info', 'SiteInfoController@store');
 
 
+//    sensors
+    Route::get('/sensors', 'SensorController@index');
+    Route::get('/sensors/{sensor}', 'SensorController@edit');
+    Route::post('/sensors', 'SensorController@store');
+    Route::get('/remove_sensor/{id}' , 'SensorController@destroy');
+
 //    categories
     Route::get('/categories', 'CategoryController@index');
     Route::get('/categories/{category}', 'CategoryController@edit');

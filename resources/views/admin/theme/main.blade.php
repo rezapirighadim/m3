@@ -245,6 +245,7 @@ $path = isset($path) ? $path : 'مدیریت وب سایت / ' . $title;
 
 
             <li><a href="/admin/masters"><i class="fa fa-check"></i> <span>اساتید</span></a></li>
+            <li><a href="/admin/sensors"><i class="fa fa-get-pocket"></i> <span>سنسور</span></a></li>
             <li><a href="/admin/categories"><i class="fa fa-check"></i> <span>دسته بندی</span></a></li>
             <li><a href="/admin/packages"><i class="fa fa-check"></i> <span>پکیج</span></a></li>
             <li><a href="/admin/off_codes"><i class="fa fa-check"></i> <span>کد تخفیف</span></a></li>
