@@ -1007,6 +1007,9 @@ function arabicToPersian($string)
         '٩' => '۹',
         '٠' => '۰',
     ];
+    if (gettype($string) !== "string"){
+        return $string;
+    }
     return str_replace(array_keys($characters), array_values($characters),$string);
 }
 

@@ -8983,20 +8983,20 @@ hr.footer-border {
 }
 .delete_btn {
     display:inline-block;
-    background-color: red ;
+    background-color: rgba(255, 0, 0, 0.71);
     border-radius: 50% ;
     color:#fff ;
     width: 30px;
     height: 30px ;
     text-align: center ;
-    padding-top: 5px ;
+    padding-top: 4px ;
     margin-top: 3px;
     border : none ;
     cursor: pointer !important;
 }
 .add_btn {
     display:inline-block;
-    background-color: green ;
+    background-color: #418141;
     border-radius: 50% ;
     color:#fff ;
     width: 30px;

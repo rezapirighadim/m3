@@ -26,6 +26,20 @@ Route::namespace('Admin')->prefix('admin')->middleware([ 'ConvertArabic2Persian'
     Route::post('/sensors', 'SensorController@store');
     Route::get('/remove_sensor/{id}' , 'SensorController@destroy');
 
+
+
+//    sensor_vaiables
+    Route::get('/sensor_variables', 'SensorVariablesController@index');
+    Route::get('/sensor_variables/{variable}', 'SensorVariablesController@edit');
+    Route::post('/sensor_variables', 'SensorVariablesController@store');
+    Route::get('/remove_sensor_variables/{id}' , 'SensorVariablesController@destroy');
+
+//    sensor_datas
+//    Route::get('/sensor_datas', 'SensorDataController@index');
+//    Route::get('/sensor_datas/{sensor_data}', 'SensorDataController@edit');
+//    Route::post('/sensor_datas', 'SensorDataController@store');
+//    Route::get('/sensor_datas/{id}' , 'SensorDataController@destroy');
+
 //    categories
     Route::get('/categories', 'CategoryController@index');
     Route::get('/categories/{category}', 'CategoryController@edit');
