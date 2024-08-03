@@ -243,19 +243,12 @@ $path = isset($path) ? $path : 'مدیریت وب سایت / ' . $title;
             <li ><a  href="/admin/index"><i class="fa fa-dashboard"></i> <span>داشبورد</span></a></li>
 
 
-
-            <li><a href="/admin/masters"><i class="fa fa-check"></i> <span>اساتید</span></a></li>
-            <li><a href="/admin/sensors"><i class="fa fa-get-pocket"></i> <span>سنسور</span></a></li>
-            <li><a href="/admin/sensor_variables"><i class="fa fa-get-pocket"></i> <span>متغییر سنسور ها</span></a></li>
-            <li><a href="/admin/categories"><i class="fa fa-check"></i> <span>دسته بندی</span></a></li>
-            <li><a href="/admin/packages"><i class="fa fa-check"></i> <span>پکیج</span></a></li>
-            <li><a href="/admin/off_codes"><i class="fa fa-check"></i> <span>کد تخفیف</span></a></li>
-            <li><a href="/admin/contents"><i class="fa fa-check"></i> <span>محتوا</span></a></li>
-            <li><a href="/admin/banners"><i class="fa fa-picture-o"></i> <span>بنر ها </span></a></li>
-            <li><a href="/admin/orders"><i class="fa fa-check"></i> <span>تاریخچه سفارشات</span></a></li>
-            <li><a href="/admin/comments"><i class="fa fa-comment"></i> <span>نظرات کاربران</span></a></li>
-            <li><a href="/admin/mobile_users"><i class="fa fa-mobile-phone"></i> <span> کاربران </span></a></li>
-            <li><a href="/admin/site_info"><i class="fa fa-mobile-phone"></i> <span> اطلاعات سایت </span></a></li>
+            <li><a href="/admin/sensors"><i class="fa fa-deviantart"></i> <span>سنسور</span></a></li>
+            <li><a href="/admin/sensor_variables"><i class="fa fa-check"></i> <span>متغییر سنسور ها</span></a></li>
+            <li><a href="/admin/orders"><i class="fa fa-link"></i> <span>تنظیمات اتصال به MQTT</span></a></li>
+            <li><a href="/admin/orders"><i class="fa fa-bell"></i> <span>تاریخچه هشدار ها</span></a></li>
+            <li><a href="/admin/orders"><i class="fa fa-database"></i> <span>داده های ورودی</span></a></li>
+            <li><a href="/admin/mobile_users"><i class="fa fa-users"></i> <span> کاربران </span></a></li>
             <li><a href="/admin/change_password"><i class="fa fa-key"></i> <span>تغییر رمز عبور</span></a></li>
             <li><a href="/logout"><i class="fa fa-sign-out"></i> <span>خروج از سیستم</span></a></li>
 
