@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Sensor;
 use Illuminate\Console\Command;
 use App\Services\MqttService;
 use App\Models\MqttConnection;
@@ -35,7 +36,9 @@ class ListenToMqtt extends Command
             $this->mqttService->connect();
             $this->info('MQTT connection established.');
 
-            $this->mqttService->subscribe('test/topic', function ($topic, $message) {
+            $sensor_id = Sensor::first();
+            $sensor_id = $sensor_id->id ?? 'test/topic';
+            $this->mqttService->subscribe($sensor_id, function ($topic, $message) {
                 event(new MqttMessageReceived($topic, $message));
             });
 

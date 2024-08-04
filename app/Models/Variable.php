@@ -9,6 +9,11 @@ class Variable extends Model
 {
     use HasFactory;
 
+    protected $guarded = [] ;
+
+    protected $casts = [
+        'alert_index' => 'array',
+    ];
     public function sensor(){
         return $this->belongsTo(Sensor::class);
     }
