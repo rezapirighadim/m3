@@ -32,9 +32,10 @@ Route::namespace('Admin')->prefix('admin')->middleware([ 'ConvertArabic2Persian'
     Route::get('/mqtt_connection/{mqtt_connection}', 'MqttController@edit');
     Route::post('/mqtt_connection', 'MqttController@store');
 
+    Route::get('/mqtt_messages', 'MqttMessageController@index');
 
-    Route::post('/mqtt/publish', 'MqttController@publish');
-    Route::get('/mqtt/subscribe', 'MqttController@subscribe');
+//    Route::post('/mqtt/publish', 'MqttController@publish');
+//    Route::get('/mqtt/subscribe', 'MqttController@subscribe');
     Route::get('/mqtt/check-connection', 'MqttController@checkConnection');
 
 //    sensor_vaiables

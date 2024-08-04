@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\MqttMessageReceived;
+use App\Models\MqttMessage;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
@@ -20,5 +21,11 @@ class HandleMqttMessage
         // Process the received MQTT message
         // For example, log the message or save it to the database
         Log::info("Received MQTT message on topic {$event->topic}: {$event->message}");
+
+        // Store the received message in the database
+        MqttMessage::create([
+            'topic' => $event->topic,
+            'message' => $event->message,
+        ]);
     }
 }
