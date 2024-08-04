@@ -76,7 +76,7 @@ class SensorVariablesController extends AdminController
     {
         $variables = array_values($variables);
         foreach ($variables as $key => $variable){
-            if (!$variable['title'] || !$variable['threshold']){
+            if (!$variable['index'] || !$variable['threshold']){
                 unset($variables[$key]);
             }
         }

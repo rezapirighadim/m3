@@ -67,8 +67,8 @@
                                         <div class="col-md-5">
                                             <div class="form-group">
                                                 <input type="text" class="form-control "
-                                                       name="variables[{{$key}}][title]" value="{{$value['title']}}"
-                                                       placeholder="نام متغییر عینا وارد شود" id="long">
+                                                       name="variables[{{$key}}][index]" value="{{$value['index']}}"
+                                                       placeholder="index متغییر عینا وارد شود" id="long">
                                             </div>
                                         </div>
                                         <div class="col-md-5">
@@ -190,7 +190,7 @@
             $("#book_creator").append("<div class='variables'>" +
                 " <div class='col-md-5'>" +
                 " <div class='form-group'>" +
-                "<input type='text' class='form-control'  name='variables[" + id + "][title]' placeholder='نام متغییر عینا وارد شود'>" +
+                "<input type='text' class='form-control'  name='variables[" + id + "][index]' placeholder='نام متغییر عینا وارد شود'>" +
                 " </div>" +
                 " </div>" +
                 "<div class='col-md-5'>" +
