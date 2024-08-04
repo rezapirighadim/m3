@@ -7,7 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Quran</title>
+    <title>Mqtt Panel</title>
     <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Styles -->
@@ -32,7 +32,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    زیرساخت قرآنی
+                    Mqtt Panel
                 </a>
             </div>
 

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Quran |قرآن</title>
+<title>Mqtt Panel</title>
 
 
     <!-- Fonts -->
@@ -76,15 +76,13 @@
                 <a class="laraFont" href="{{ url('/home') }}">Home</a>
             @else
                 <a class="laraFont" href="{{ url('/login') }}">Login</a>
-                <a class="laraFont" href="{{ url('/register') }}">Register</a>
-                <a class="laraFont" href="{{ url('/contact_us') }}">Contact Us</a>
             @endif
         </div>
     @endif
 
     <div class="content">
         <div class="title m-b-md laraFont" >
-            Quran
+            Mqtt Panel
         </div>
         <p style="text-align: right ; font-family: 'Raleway', sans-serif;">welcome</p>
     </div>
