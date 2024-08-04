@@ -27,6 +27,12 @@ Route::namespace('Admin')->prefix('admin')->middleware([ 'ConvertArabic2Persian'
     Route::get('/remove_sensor/{id}' , 'SensorController@destroy');
 
 
+//    sensors
+    Route::get('/mqtt_connection', 'MqttController@index');
+    Route::get('/mqtt_connection/{mqtt_connection}', 'MqttController@edit');
+    Route::post('/mqtt_connection', 'MqttController@store');
+
+
 
 //    sensor_vaiables
     Route::get('/sensor_variables', 'SensorVariablesController@index');

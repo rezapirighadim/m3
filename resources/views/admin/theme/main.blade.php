@@ -245,7 +245,7 @@ $path = isset($path) ? $path : 'مدیریت وب سایت / ' . $title;
 
             <li><a href="/admin/sensors"><i class="fa fa-deviantart"></i> <span>سنسور</span></a></li>
             <li><a href="/admin/sensor_variables"><i class="fa fa-check"></i> <span>متغییر سنسور ها</span></a></li>
-            <li><a href="/admin/orders"><i class="fa fa-link"></i> <span>تنظیمات اتصال به MQTT</span></a></li>
+            <li><a href="/admin/mqtt_connection"><i class="fa fa-link"></i> <span>تنظیمات اتصال به MQTT</span></a></li>
             <li><a href="/admin/orders"><i class="fa fa-bell"></i> <span>تاریخچه هشدار ها</span></a></li>
             <li><a href="/admin/orders"><i class="fa fa-database"></i> <span>داده های ورودی</span></a></li>
             <li><a href="/admin/mobile_users"><i class="fa fa-users"></i> <span> کاربران </span></a></li>
