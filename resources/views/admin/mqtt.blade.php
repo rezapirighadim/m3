@@ -79,8 +79,16 @@
                         </div>
 
                         <div class="form-group">
-                            <button type="submit"
-                                    class="btn btn-info btn-block"> <?= (!$ready ? "ثبت تنظیمات " : "ویرایش") ?> </button>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="submit"
+                                            class="btn btn-info btn-block"> <?= (!$ready ? "ثبت تنظیمات " : "ویرایش") ?> </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a onclick="check_connection(this)"
+                                       class="btn btn-primary btn-block"><i class="fa fa-link"></i> تست اتصال </a>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -88,4 +96,53 @@
 
         </div>
     </div>
+
+    <script>
+        function check_connection(sender) {
+            sender = $(sender);
+            var parent = sender.parentsUntil('.cat_row').parent();
+            $.ajax("/admin/mqtt/check-connection/", {
+                type: 'get',
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    if(data.status == "Connected"){
+                        Swal.fire({
+                            "title": "موفق",
+                            "text": "با موفقیت اتصال انجام شد !",
+                            "timer": "1500",
+                            "heightAuto": true,
+                            "padding": "1.25rem",
+                            "animation": true,
+                            "showConfirmButton": false,
+                            "showCloseButton": true,
+                            "toast": true,
+                            "type": "success",
+                            "position": "center"
+                        });
+                    }else{
+                        Swal.fire({
+                            "title": "نا موفق",
+                            "text": "اتصال انجام نشد !",
+                            "timer": "1500",
+                            "heightAuto": true,
+                            "padding": "1.25rem",
+                            "animation": true,
+                            "showConfirmButton": false,
+                            "showCloseButton": true,
+                            "toast": true,
+                            "type": "fail",
+                            "position": "center"
+                        });
+                    }
+
+
+                },
+            });
+        }
+
+        function note_edit() {
+
+        }
+    </script>
 @endsection
