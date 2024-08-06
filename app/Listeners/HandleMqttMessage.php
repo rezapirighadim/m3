@@ -3,6 +3,8 @@
 namespace App\Listeners;
 
 use App\Events\MqttMessageReceived;
+use App\Models\Device;
+use App\Models\Device_data;
 use App\Models\MqttConnection;
 use App\Models\MqttMessage;
 use App\Models\Variable;
@@ -41,10 +43,7 @@ class HandleMqttMessage
         Log::info("Received MQTT message on topic {$event->topic}: {$event->message}");
 
         // Store the received message in the database
-        MqttMessage::create([
-            'topic' => $event->topic,
-            'message' => $event->message,
-        ]);
+
 
         $message = json_decode($event->message, true);
 
@@ -63,22 +62,36 @@ class HandleMqttMessage
         }
 
         $alertTriggered = false;
+        $uuid = $this->getValueFromIndex($message, $variables->uuid_index);
+        $device = Device::where('uuid', $uuid)->first();
+        if (!$device) {
+            $device = Device::query()->create(['uuid' => $uuid]);
+        }
+
+        $device_data = new Device_data();
+        $device_data->topic = $event->topic;
+        $device_data->sensor_id = $event->topic;
+        $device_data->device_id = $device->id;
+        $device_data->received_data = json_encode($message);
         foreach ($alert_index as $alert) {
             if ($this->checkAndLogAlert($message, $alert)) {
                 $alertTriggered = true;
             }
         }
 
-
         if ($variables->publish_json) {
             $json = json_decode($variables->publish_json);
             $json['server_message'] = $alertTriggered ? 'Alert triggered' : 'Every thing is OK!';
             $json['alert_triggered'] = $alertTriggered;
+            $json['uuid'] = $uuid;
             $server_message = json_encode($json);
             $this->sendSuccessMessage($event->topic, $server_message);
+            $device_data->sent_data = json_encode($server_message);
         }
+        $device_data->save();
 
     }
+
 
     private function sendSuccessMessage($topic, $server_message)
     {

@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Device_data extends Model
 {
     use HasFactory;
+    protected $table = 'device_datas';
     protected $guarded = [];
 }
