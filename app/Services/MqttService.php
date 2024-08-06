@@ -14,7 +14,7 @@ class MqttService
 {
     public $client;
     protected $connection;
-    protected $connected = false;
+    public $connected = false;
 
     public function __construct(MqttConnection $connection)
     {
