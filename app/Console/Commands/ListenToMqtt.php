@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use App\Services\MqttService;
 use App\Models\MqttConnection;
 use App\Events\MqttMessageReceived;
+use Illuminate\Support\Facades\Log;
 use PhpMqtt\Client\Exceptions\MqttClientException;
 
 class ListenToMqtt extends Command
@@ -32,22 +33,25 @@ class ListenToMqtt extends Command
 
         $this->mqttService = new MqttService($connection);
 
-        try {
-            $this->mqttService->connect();
-            $this->info('MQTT connection established.');
+        while (true) {
+            try {
+                $this->mqttService->connect();
+                $this->info('MQTT connection established.');
 
-            $sensor_id = Sensor::first();
-            $sensor_id = $sensor_id->id ?? 'test/topic';
-            $this->mqttService->subscribe($sensor_id, function ($topic, $message) {
-                event(new MqttMessageReceived($topic, $message));
-            });
+                $sensor_id = Sensor::first();
+                $sensor_id = $sensor_id->id ?? 'test/topic';
+                $this->mqttService->subscribe($sensor_id, function ($topic, $message) {
+                    event(new MqttMessageReceived($topic, $message));
+                });
 
-            // Keeping the script running
-            while (true) {
-                $this->mqttService->client->loop(true); // Listen for messages
+                while ($this->mqttService->connected) {
+                    $this->mqttService->client->loop(true); // Listen for messages
+                }
+            } catch (MqttClientException $e) {
+                $this->error('MQTT connection failed: ' . $e->getMessage());
+                Log::error('MQTT connection failed: ' . $e->getMessage());
+                sleep(2); // Wait before attempting to reconnect
             }
-        } catch (MqttClientException $e) {
-            $this->error('MQTT connection failed: ' . $e->getMessage());
         }
     }
 }
