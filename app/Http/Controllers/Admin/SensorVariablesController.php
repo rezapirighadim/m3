@@ -28,6 +28,7 @@ class SensorVariablesController extends AdminController
         $validData = $this->validate($request, [
             'sensor_id' => 'required|numeric|exists:sensors,id|unique:variables,sensor_id,' . $request['edit'] ,
             'variables' => 'required|array',
+            'uuid_index' => 'required',
         ]);
 
         $variablesJson = $this->convertVariables($request['variables']);
@@ -37,6 +38,7 @@ class SensorVariablesController extends AdminController
 
         $variable->sensor_id = $request['sensor_id'];
         $variable->alert_index = json_encode($variablesJson);
+        $variable->uuid_index = $request['uuid_index'];
         $variable->save();
 
         toast( __('trans.SUBMIT_SUCCESSFULLY'),'success')->width('350')->position('center');

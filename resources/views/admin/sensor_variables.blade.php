@@ -48,6 +48,15 @@
                                     @endforeach
                                 </select>
                             </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>ایندکس استخراج UUID</label>
+                                    <input type="text" class="form-control "
+                                           name="uuid_index" value="<?=($ready ? $reqData['uuid_index'] : "")?>"
+                                           placeholder="uuid" id="long">
+                                </div>
+                            </div>
                             <hr>
                         </div>
 
@@ -62,7 +71,7 @@
 
                         <div class="row col-md-12" id="book_creator">
                             @if ($ready && $reqData['alert_index'])
-                                @foreach(json_decode($reqData['alert_index'] , true ) as $key => $value)
+                                @foreach(json_decode($reqData['alert_index'] , true)  as $key => $value)
                                     <div class="variables">
                                         <div class="col-md-5">
                                             <div class="form-group">
@@ -135,7 +144,7 @@
                                         <td><?= $item['id']; ?></td>
                                         <td><?= $item['sensor']['name'] ?? ''; ?></td>
                                         <td><?= $item['sensor']['version'] ?? ''; ?></td>
-                                        <td><?= $item['alert_index']; ?></td>
+                                        <td><?= json_encode($item['alert_index']); ?></td>
                                         <td>مشاهده</td>
                                         <td>
                                             <a style="text-decoration: none;cursor: pointer" ;
