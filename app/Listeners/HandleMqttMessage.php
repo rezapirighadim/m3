@@ -31,7 +31,7 @@ class HandleMqttMessage
     /**
      * Handle the event.
      *
-     * @param  MqttMessageReceived  $event
+     * @param MqttMessageReceived $event
      * @return void
      */
     public function handle(MqttMessageReceived $event)
@@ -53,28 +53,37 @@ class HandleMqttMessage
 
         $variables = Variable::where('sensor_id', $sensorId)->first();
 
-        $alertTriggered = false;
-        $message = "";
-            foreach ($variables->alert_index as $alert) {
-                if ($this->checkAndLogAlert($message, $alert)) {
-                    $alertTriggered = true;
-                }
-            }
+        $alert_index = $variables->alert_index;
+        if (!is_array($variables->alert_index)) {
+            try {
+                $alert_index = json_decode($variables->alert_index, true);
+            } catch (\Exception $e) {
 
-        $message = $alertTriggered ? 'Alert triggered' : 'Every thing is OK!';
-        if ( $variables->publish_json){
-            $json = json_decode( $variables->publish_json);
-            $json['server_message'] = $message;
-            $message = json_encode($json);
+            }
         }
 
-        $this->sendSuccessMessage($event->topic , $alertTriggered , $message);
+        $alertTriggered = false;
+        foreach ($alert_index as $alert) {
+            if ($this->checkAndLogAlert($message, $alert)) {
+                $alertTriggered = true;
+            }
+        }
+
+
+        if ($variables->publish_json) {
+            $json = json_decode($variables->publish_json);
+            $json['server_message'] = $alertTriggered ? 'Alert triggered' : 'Every thing is OK!';
+            $json['alert_triggered'] = $alertTriggered;
+            $server_message = json_encode($json);
+            $this->sendSuccessMessage($event->topic, $server_message);
+        }
+
     }
 
-    private function sendSuccessMessage($topic , $alertTriggered , $message)
+    private function sendSuccessMessage($topic, $server_message)
     {
         try {
-            $this->mqttService->publish($topic . '/response', $message);
+            $this->mqttService->publish($topic . '/response', $server_message);
         } catch (MqttClientException $e) {
             Log::error('Failed to send MQTT success message: ' . $e->getMessage());
         }

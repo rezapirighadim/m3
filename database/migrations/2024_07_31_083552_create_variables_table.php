@@ -17,6 +17,8 @@ class CreateVariablesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('sensor_id')->index();
             $table->json('alert_index');
+            $table->string('uuid_index')->nullable();
+            $table->string('publish_json')->nullable();
             $table->timestamps();
         });
     }
