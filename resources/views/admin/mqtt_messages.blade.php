@@ -19,9 +19,11 @@
                             <tr>
                                 <th>شناسه</th>
                                 <th class="tac">تاپیک</th>
-                                <th class="tac">مقدار</th>
-                                <th class="tac">تاریخ و ساعت</th>
+                                <th class="tac">ای دی سخت افزار</th>
+                                <th class="tac">ای دی سنسور</th>
                                 <th class="tac">نمایش کامل</th>
+                                <th class="tac">مقدار دریافتی</th>
+                                <th class="tac">مقدار ارسالی</th>
                             </tr>
                             </thead>
 
@@ -32,9 +34,12 @@
                             <tr class="cat_row">
                                 <td>{{$record['id']}}</td>
                                 <td class="tac">{{$record['topic']}}</td>
-                                <td class="tac">{{$record['message']}}</td>
-                                <td class="tac">{{jdate('Y/m/d H:i' , $record['creation_time'])}}</td>
+                                <td class="tac">{{$record['device_id']}}</td>
+                                <td class="tac">{{$record['sensor_id']}}</td>
                                 <td class="tac">-</td>
+
+                                <td class="tac">{{$record['received_data']}}</td>
+                                <td class="tac">{{$record['sent_data']}}</td>
                             </tr>
                             <?}}?>
                             </tbody>

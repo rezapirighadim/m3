@@ -8,6 +8,10 @@ Route::namespace('Admin')->prefix('admin')->middleware([ 'ConvertArabic2Persian'
     Route::get('/index', 'AdminController@index');
 
 
+    //devices
+    Route::get('/devices', 'DeviceController@index');
+
+
 //    masters
     Route::get('/masters', 'MastersController@index');
     Route::get('/masters/{master}', 'MastersController@edit');

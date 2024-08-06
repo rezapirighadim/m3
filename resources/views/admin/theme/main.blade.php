@@ -248,7 +248,7 @@ $path = isset($path) ? $path : 'مدیریت وب سایت / ' . $title;
             <li><a href="/admin/mqtt_connection"><i class="fa fa-link"></i> <span>تنظیمات اتصال به MQTT</span></a></li>
             <li><a href="/admin/mqtt_messages"><i class="fa fa-database"></i> <span>داده های ورودی</span></a></li>
             <li><a href="/admin/mqtt_alerts"><i class="fa fa-bell"></i> <span>تاریخچه هشدار ها</span></a></li>
-            <li><a href="/admin/mobile_users"><i class="fa fa-users"></i> <span> کاربران </span></a></li>
+            <li><a href="/admin/devices"><i class="fa fa-users"></i> <span> سخت افزار های </span></a></li>
             <li><a href="/admin/change_password"><i class="fa fa-key"></i> <span>تغییر رمز عبور</span></a></li>
             <li><a href="/logout"><i class="fa fa-sign-out"></i> <span>خروج از سیستم</span></a></li>
 
