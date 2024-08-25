@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\AppInstall;
 use App\BookContent;
 use App\MobileUser;
+use App\Models\Device_data;
 use App\Publisher;
 use App\Tariff;
 use App\Transaction;
@@ -36,6 +37,9 @@ class AdminController extends Controller
     public function index() {
         $data['title'] = "داشبورد";
         $data['path'] = "داشبورد";
+
+        $data['mqtt_messages'] = Device_data::all();;
+
 
         return View('admin.index', $data);
     }

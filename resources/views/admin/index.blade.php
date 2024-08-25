@@ -1,134 +1,185 @@
 @extends('admin.theme.main')
 @section('content')
-    @if (auth()->user()->role == 'seller')
+    @php
+        $free_book = 1;
+        $book_content_count= 22;
+        $app_install= 22;
+        $user_count= 22;
+    @endphp
 
-        <div class="row">
+    <style>
+        /* Flex container for all elements in a single line */
+        .alert {
+            display: flex;
+            align-items: center;
+        }
 
-            <div class="col-md-6">
-                <p class="alert alert-info"> مدت زمان باقی مانده اعتبار استفاده از پنل :
+        /* Style for the dot container */
+        .dot-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+        }
 
-                    <span class="red-color red">
-                    {{
-                        auth()->user()->expire_time > time() ? round((auth()->user()->expire_time - time()) / 86400) . ' روز ' :  'تمام شده'
-                    }}
+        /* Ensure the dot is aligned in the center */
+        #center-div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-                    </span>
-                </p>
+        /* Base style for the dot */
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(0, 255, 0, 0.4);
+            animation: dot-pulse 1.5s linear infinite;
+        }
+
+        .mx-2 {
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+
+        /* Pulse animation */
+        @keyframes dot-pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.75;
+            }
+            25% {
+                transform: scale(1);
+                opacity: 0.75;
+            }
+            100% {
+                transform: scale(2.5);
+                opacity: 0;
+            }
+        }
+
+    </style>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert  d-flex align-items-center justify-content-start">
+                <span>وضعیت اتصال به شبکه اینترنت اشیا :</span>
+                <div id="center-div" class="dot-container mx-2">
+                    <div class="dot online"></div>
+                </div>
+                <span id="status_title" class="green">آنلاین</span>
             </div>
-            <div class="col-md-6">
-                <p class="alert alert-success"> دسترسی به نشر ( ناشران ) :
+            <hr>
+            <br>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3">
+                <div class="pie-widget">
+                    <div id="pie-widget-1" class="chart-pie-widget" data-percent="{{get_percent($book_count ?? '1' , $book_limit ?? '1' )}}">
+                        <span class="pie-widget-count-1 pie-widget-count"></span>
+                    </div>
+                    <div style="margin-right: 30px ;margin-top: 20px;">
+                        <p class="tar"> تعداد کل پیام های دریافتی یک ساعت اخیر: <span class="red">{{$free_book  ?? '1'}}</span> </p>
+                    </div>
 
-                    <span class="red-color red">
-                        {{
-                        empty($publishers) ? 'x' : implode(' - ' , $publishers)
-                        }}
-                    </span>
-                </p>
+                </div>
             </div>
+            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3">
+                <div class="pie-widget">
+                    <div id="pie-widget-2" class="chart-pie-widget" data-percent="{{get_percent($book_count ?? '1' , $free_book  ?? '1' )}}">
+                        <span class="pie-widget-count-2 pie-widget-count"></span>
+                    </div>
+                    <div style="margin-right: 30px ;margin-top: 20px;">
+                        <p class="tar"> تعداد کل پیام های دریافتی کل: <span class="red">{{$free_book  ?? '1'}}</span> </p>
+                    </div>
 
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3">
+                <div class="pie-widget">
+                    <div id="pie-widget-3" class="chart-pie-widget" data-percent="{{get_percent($book_count ?? '1' , $book_content_count )}}">
+                        <span class="pie-widget-count-3 pie-widget-count"></span>
+                    </div>
+                    <div style="margin-right: 30px ;margin-top: 20px;">
+                        <p class="tar"> تعداد کل هشدارهای دریافتی یک ساعت اخیر: <span class="red">{{$free_book  ?? '1'}}</span> </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3">
+                <div class="pie-widget">
+                    <div id="pie-widget-4" class="chart-pie-widget" data-percent="{{get_percent($app_install , $user_count )}}">
+                        <span class="pie-widget-count-4 pie-widget-count"></span>
+                    </div>
+                    <div style="margin-right: 30px ;margin-top: 20px;">
+                        <p class="tar"> تعداد کل هشدارهای دریافتی: <span class="red">{{$free_book  ?? '1'}}</span> </p>
+                    </div>
+
+
+                </div>
+            </div>
 
         </div>
-        @if (round((auth()->user()->expire_time - time()) / 86400) <= 15)
-               <div class="row">
-                   <div class="col-md-12">
+    </div>
 
-                       <h1 class="tac">تعرفه ها</h1>
 
-                       <hr>
-                       <p class="alert alert-danger"> مدت زمان استفاده از پنل شما رو به اتمام است . لطفا برای جلو گیری از مسدود شدن امکانات پنل مدیریت و کارکرد اپلیکیشن نسبت به خرید یکی از تعرفه ها زیر اقدام کنید . </p>
-                       <br>
-                   </div>
-               </div>
+    <br>
+    <br>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">داده های دریافتی</h3>
+            </div>
+            <div class="panel-body">
+                <section class="row component-section">
 
-        <div class="row">
-            @foreach($tariffs as $tariff)
-                <div class="col-md-6">
-                    <div style="background-color:{{$tariff['color']}} ; border-radius: 20px !important;">
-                        <div style="background-color: white ; margin : 0px 10px ; padding: 30px 50px;">
-                            <h1 class="tac">{{$tariff['title']}}</h1>
-                            <hr>
-                            <p>{{$tariff['description']}}</p>
-                            <hr>
-                            <p>محدودیت کتاب : {{number_format($tariff['book_limit'])}}  </p>
-                            <p>قیمت اصلی : {{number_format($tariff['price'])}} ریال </p>
-                            <p>قیمت بعد از تخفیف : {{number_format($tariff['discounted_price'])}} ریال </p>
-                            <hr>
-                            <br>
-                            <a href="{{URL::to('/admin/payTariff/' . $tariff['id'])}}" target="_blank" class="btn btn-info btn-block">پرداخت</a>
+                    <!-- responsive table title and description -->
+
+                    <!-- responsive table code and example -->
+                    <div class="col-md-12">
+                        <!-- responsive table example -->
+                        <div class="pmd-card pmd-z-depth pmd-card-custom-view">
+                            <table id="example" class="table pmd-table table-hover table-striped  display responsive nowrap" cellspacing="0" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>شناسه</th>
+                                    <th class="tac">تاپیک</th>
+                                    <th class="tac">ای دی سخت افزار</th>
+                                    <th class="tac">ای دی سنسور</th>
+                                    <th class="tac">نمایش کامل</th>
+                                    <th class="tac">مقدار دریافتی</th>
+                                    <th class="tac">مقدار ارسالی</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <?
+                                if(isset($mqtt_messages) && $mqtt_messages!=null){
+                                foreach($mqtt_messages as $mqtt_message){?>
+                                <tr class="cat_row">
+                                    <td>{{$mqtt_message['id']}}</td>
+                                    <td class="tac">{{$mqtt_message['topic']}}</td>
+                                    <td class="tac">{{$mqtt_message['device_id']}}</td>
+                                    <td class="tac">{{$mqtt_message['sensor_id']}}</td>
+                                    <td class="tac">-</td>
+
+                                    <td class="tac">{{$mqtt_message['received_data']}}</td>
+                                    <td class="tac">{{$mqtt_message['sent_data']}}</td>
+                                </tr>
+                                <?}}?>
+                                </tbody>
+                            </table>
                         </div>
+
                     </div>
-                    <br>
-                </div>
+                </section>
 
-            @endforeach
-        </div>
 
-    @else
-
-        <div class="row">
-            <div class="col-md-12" >
-
-                <div style="padding: 10px">
-
-                    <payment-component :values="{{ json_encode($values) }}" :labels="{{ json_encode($labels) }}"></payment-component>
-                </div>
 
             </div>
-            <div class="col-md-12">
-                <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3">
-                    <div class="pie-widget">
-                        <div id="pie-widget-1" class="chart-pie-widget" data-percent="{{get_percent($book_count , $book_limit )}}">
-                            <span class="pie-widget-count-1 pie-widget-count"></span>
-                        </div>
-                        <div style="margin-right: 30px ;margin-top: 20px;">
-                            <p class="tar"> کتب مجاز :‌ <span class="red">{{$book_limit}}</span> </p>
-                            <p class="tar">تعداد کل کتب :‌ <span class="red">{{$book_count}}</span> </p>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3">
-                    <div class="pie-widget">
-                        <div id="pie-widget-2" class="chart-pie-widget" data-percent="{{get_percent($book_count , $free_book )}}">
-                            <span class="pie-widget-count-2 pie-widget-count"></span>
-                        </div>
-                        <div style="margin-right: 30px ;margin-top: 20px;">
-                            <p class="tar"> تعداد کتب رایگان :‌ <span class="red">{{$free_book}}</span> </p>
-                            <p class="tar">تعداد کتب غیر رایگان :‌ <span class="red">{{$book_count - $free_book}}</span> </p>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3">
-                    <div class="pie-widget">
-                        <div id="pie-widget-3" class="chart-pie-widget" data-percent="{{get_percent($book_count , $book_content_count )}}">
-                            <span class="pie-widget-count-3 pie-widget-count"></span>
-                        </div>
-                        <div style="margin-right: 30px ;margin-top: 20px;">
-                            <p class="tar"> تعداد کتب بامحتوا :‌ <span class="red">{{$book_content_count}}</span> </p>
-                            <p class="tar">تعداد کتب بدون محتوا :‌ <span class="red">{{$book_count - $book_content_count}}</span> </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-3 col-xs-6 col-lg-3">
-                    <div class="pie-widget">
-                        <div id="pie-widget-4" class="chart-pie-widget" data-percent="{{get_percent($app_install , $user_count )}}">
-                            <span class="pie-widget-count-4 pie-widget-count"></span>
-                        </div>
-                        <div style="margin-right: 30px ;margin-top: 20px;">
-                            <p class="tar"> تعداد نصب اپلیکیشن :‌ <span class="red">{{$app_install}}</span> </p>
-                            <p class="tar">تعداد ثبت نام کنندگان :‌ <span class="red">{{$user_count}}</span> </p>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-
-
         </div>
+    </div>
 
-    @endif
-    @endif
 
 @endsection

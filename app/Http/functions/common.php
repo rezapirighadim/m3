@@ -1068,6 +1068,7 @@ function get_month_name($date){
 
 function get_percent($total , $retail){
     try{
+        if (!is_numeric($total) || !is_numeric($retail)) return 0;
         $p = $retail / $total;
         if ( $p >= 1)
             return 100;
