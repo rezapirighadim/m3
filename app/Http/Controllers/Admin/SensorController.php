@@ -33,6 +33,8 @@ class SensorController extends AdminController
         $sensor->name = $request['name'];
         $sensor->uuid = $request['uuid'];
         $sensor->version = $request['version'];
+        $sensor->receive_topic = $request['receive_topic'];
+        $sensor->response_topic = $request['response_topic'];
         $sensor->description = $request['description'];
         $sensor->save();
 
@@ -41,19 +43,6 @@ class SensorController extends AdminController
 
     }
 
-    private function upload_image($request){
-        $imageName = null;
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $destinationPathImg = public_path() . '/uploads/categories/';
-            $time = time();
-            if (!$image->move($destinationPathImg,$time . $image->getClientOriginalName())) {
-                return 'Error saving the file.';
-            }
-            $imageName = $time . $image->getClientOriginalName();
-        }
-        return $imageName;
-    }
 
     public function edit(Sensor $sensor)
     {

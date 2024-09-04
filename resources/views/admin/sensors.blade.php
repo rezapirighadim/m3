@@ -43,17 +43,30 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>شناسه اختصاصی (UUID)</label>
-                                    <input name="uuid" class="form-control" value="<?=($ready ? $requestedData['uuid'] : "")?>" placeholder="uuid">
+                                    <input name="uuid" class="form-control ltr mono_font" value="<?=($ready ? $requestedData['uuid'] : "")?>" placeholder="uuid">
                                 </div>
                             </div>
-
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>ورژن سنسور</label>
-                                    <input name="version" class="form-control" value="<?=($ready ? $requestedData['version'] : "")?>" placeholder="ورژن سنسور">
+                                    <input name="version" class="form-control  ltr mono_font" value="<?=($ready ? $requestedData['version'] : "")?>" placeholder="Sensor Version (ex : v1.02.32)">
                                 </div>
                             </div>
 
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>تاپیک دریافت داده ها</label>
+                                    <input name="receive_topic" class="form-control ltr mono_font" value="<?=($ready ? $requestedData['receive_topic'] : "")?>" placeholder="Receive Topic">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>تاپیک ارسال پاسخ</label>
+                                    <input name="response_topic" class="form-control ltr mono_font" value="<?=($ready ? $requestedData['response_topic'] : "")?>" placeholder="Response Topic">
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12">

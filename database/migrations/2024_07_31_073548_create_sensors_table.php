@@ -18,6 +18,8 @@ class CreateSensorsTable extends Migration
             $table->uuid('uuid')->nullable();
             $table->string('name')->nullable();
             $table->string('version')->nullable();
+            $table->string('receive_topic')->nullable();
+            $table->string('response_topic')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });
