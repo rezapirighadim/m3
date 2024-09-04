@@ -28,7 +28,7 @@ class SensorVariablesController extends AdminController
         $validData = $this->validate($request, [
             'sensor_id' => 'required|numeric|exists:sensors,id|unique:variables,sensor_id,' . $request['edit'] ,
             'variables' => 'required|array',
-            'uuid_index' => 'required',
+            'uuid_index' => 'nullable',
         ]);
 
         $variablesJson = $this->convertVariables($request['variables']);

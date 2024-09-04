@@ -52,7 +52,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>ایندکس استخراج UUID</label>
-                                    <input type="text" class="form-control "
+                                    <input type="text" class="form-control ltr mono_font "
                                            name="uuid_index" value="<?=($ready ? $reqData['uuid_index'] : "")?>"
                                            placeholder="uuid" id="long">
                                 </div>
@@ -75,14 +75,14 @@
                                     <div class="variables">
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <input type="text" class="form-control "
+                                                <input type="text" class="form-control  ltr mono_font"
                                                        name="variables[{{$key}}][index]" value="{{$value['index']}}"
                                                        placeholder="index متغییر عینا وارد شود" id="long">
                                             </div>
                                         </div>
                                         <div class="col-md-5">
                                             <div class="form-group">
-                                                <input type="text" class="form-control "
+                                                <input type="text" class="form-control ltr mono_font "
                                                        name="variables[{{$key}}][threshold]"
                                                        value="{{$value['threshold']}}"
                                                        placeholder='حد آستانه برای هشدار را وارد کنید' id="long">
@@ -199,12 +199,12 @@
             $("#book_creator").append("<div class='variables'>" +
                 " <div class='col-md-5'>" +
                 " <div class='form-group'>" +
-                "<input type='text' class='form-control'  name='variables[" + id + "][index]' placeholder='نام متغییر عینا وارد شود'>" +
+                "<input type='text' class='form-control ltr mono_font'  name='variables[" + id + "][index]' placeholder='نام متغییر عینا وارد شود'>" +
                 " </div>" +
                 " </div>" +
                 "<div class='col-md-5'>" +
                 "<div class='form-group'>" +
-                "<input type='text' class='form-control' name='variables[" + id + "][threshold]' placeholder='حد آستانه برای هشدار را وارد کنید' >" +
+                "<input type='text' class='form-control ltr mono_font' name='variables[" + id + "][threshold]' placeholder='حد آستانه برای هشدار را وارد کنید' >" +
                 "</div>" +
                 "</div>" +
                 "<div class='col-md-2' ><span class='delete_btn' onclick='remove_creator(this)'> x </span></div>" +

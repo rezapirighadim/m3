@@ -15,9 +15,10 @@ class CreateAlertsTable extends Migration
     {
         Schema::create('alerts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('sensor_id');
-            $table->string('sensor_uuid');
-            $table->json('alert_info');
+            $table->unsignedBigInteger('sensor_id')->nullable();
+            $table->string('topic')->nullable();
+            $table->string('sensor_uuid')->nullable();
+            $table->text('alert_info');
             $table->timestamps();
         });
     }
