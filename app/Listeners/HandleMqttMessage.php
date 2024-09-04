@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\MqttMessageReceived;
+use App\Models\Alert;
 use App\Models\Device;
 use App\Models\Device_data;
 use App\Models\MqttConnection;
@@ -83,7 +84,7 @@ class HandleMqttMessage
         $device = $this->createDevice($uuid);
         $this->device_id = $device->id;
         foreach ($alert_index as $alert) {
-            if ($this->checkAndLogAlert($message, $alert)) {
+            if ($this->checkAndLogAlert($message, $alert , $uuid , $event->sensor_id , $event->topic)) {
                 $alertTriggered = true;
             }
         }
@@ -108,7 +109,7 @@ class HandleMqttMessage
         }
     }
 
-    private function checkAndLogAlert($message, $alert): bool
+    private function checkAndLogAlert($message, $alert, $uuid , $sensor_id , $topic): bool
     {
         $index = $alert['index'];
         $threshold = $alert['threshold'];
@@ -117,7 +118,13 @@ class HandleMqttMessage
         $value = $this->getValueFromIndex($message, $index);
 
         if ($value !== null && $value > $threshold) {
-            Log::info("Alert: {$index} value {$value} exceeds threshold {$threshold}");
+            Log::info("UUID : {$uuid} - SensorId : {$sensor_id} => Alert: {$index} value {$value} exceeds threshold {$threshold}");
+            Alert::query()->create([
+                'sensor_id' => $sensor_id,
+                'topic' => $topic,
+                'sensor_uuid' => $uuid,
+                'alert_info' => " مقدار {$index} برابر {$value} می باشد و از حد هشدار که برابر  {$threshold} است تجاوز کرده است "
+            ]);
             return true;
         }
         return false;

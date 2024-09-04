@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Alert;
 use App\Models\Device_data;
 use App\Models\MqttMessage;
 
@@ -16,6 +17,14 @@ class MqttMessageController extends AdminController
 
         $data = array_merge($data, $this->data);
         return View('admin.mqtt_messages', $data);
+    }    public function alerts()
+    {
+        $data['records'] = Alert::all();;
+        $data['title'] = "هشدار های دریافت شده از MQTT";
+        $data['path'] = "مدیریت وب سایت / هشدار های دریافتی";
+
+        $data = array_merge($data, $this->data);
+        return View('admin.mqtt_alerts', $data);
     }
 
 }

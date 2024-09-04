@@ -3,7 +3,7 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">داده های دریافتی</h3>
+            <h3 class="panel-title">هشدار های دریافتی</h3>
         </div>
         <div class="panel-body">
             <section class="row component-section">
@@ -18,11 +18,11 @@
                             <thead>
                             <tr>
                                 <th>شناسه</th>
-                                <th class="tac">تاپیک</th>
-                                <th class="tac">ای دی سخت افزار</th>
-                                <th class="tac">ای دی سنسور</th>
+                                <th class="tac">شناسه سنسور</th>
+                                <th class="tac">شناسه یکتا</th>
+                                <th class="tac">پیام هشدار</th>
                                 <th class="tac">نمایش کامل</th>
-                                <th class="tac">مقدار دریافتی</th>
+                                <th class="tac">تاپیک</th>
                             </tr>
                             </thead>
 
@@ -32,12 +32,12 @@
                             foreach($records as $record){?>
                             <tr class="cat_row">
                                 <td>{{$record['id']}}</td>
-                                <td class="tac">{{$record['topic']}}</td>
-                                <td class="tac">{{$record['device_id']}}</td>
                                 <td class="tac">{{$record['sensor_id']}}</td>
+                                <td class="tac mono_font">{{$record['sensor_uuid']}}</td>
+                                <td class=" red">{{$record['alert_info']}}</td>
                                 <td class="tac">-</td>
 
-                                <td class="tal mono_font">{{$record['received_data']}}</td>
+                                <td class="tac">{{$record['topic']}}</td>
                             </tr>
                             <?}}?>
                             </tbody>
