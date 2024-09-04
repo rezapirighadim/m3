@@ -41,6 +41,7 @@ Route::namespace('Admin')->prefix('admin')->middleware([ 'ConvertArabic2Persian'
     Route::post('/mqtt_connection', 'MqttController@store');
 
     Route::get('/mqtt_messages', 'MqttMessageController@index');
+    Route::get('/mqtt_alerts', 'MqttMessageController@alerts');
 
 //    Route::post('/mqtt/publish', 'MqttController@publish');
 //    Route::get('/mqtt/subscribe', 'MqttController@subscribe');

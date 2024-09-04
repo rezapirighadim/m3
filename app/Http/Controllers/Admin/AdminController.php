@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\AppInstall;
 use App\BookContent;
 use App\MobileUser;
+use App\Models\Alert;
 use App\Models\Device_data;
 use App\Publisher;
 use App\Tariff;
@@ -38,8 +39,13 @@ class AdminController extends Controller
         $data['title'] = "داشبورد";
         $data['path'] = "داشبورد";
 
-        $data['mqtt_messages'] = Device_data::all();;
+        $data['mqtt_messages'] = Device_data::query()->limit(5)->latest()->get();
+        $data['alerts'] = Alert::query()->limit(5)->latest()->get();
 
+        $data['messages_total'] = Device_data::query()->count('*');
+        $data['alerts_total'] = Alert::query()->count('*');
+        $data['messages_last_hour'] = Device_data::query()->where('created_at', '>=', Carbon::now()->subHour())->count('*');
+        $data['alerts_last_hour'] = Alert::query()->where('created_at', '>=', Carbon::now()->subHour())->count('*');
 
         return View('admin.index', $data);
     }
