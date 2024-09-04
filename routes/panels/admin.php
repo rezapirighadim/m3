@@ -30,6 +30,10 @@ Route::namespace('Admin')->prefix('admin')->middleware([ 'ConvertArabic2Persian'
     Route::post('/sensors', 'SensorController@store');
     Route::get('/remove_sensor/{id}' , 'SensorController@destroy');
 
+//    send data
+    Route::get('/send_data', 'SendDataController@index');
+    Route::post('/send_data', 'SendDataController@publish');
+
 
 //    sensors
     Route::get('/mqtt_connection', 'MqttController@index');
