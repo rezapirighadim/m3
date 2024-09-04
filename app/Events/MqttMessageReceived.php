@@ -11,10 +11,12 @@ class MqttMessageReceived
 
     public $topic;
     public $message;
+    public $sensor_id;
 
-    public function __construct($topic, $message)
+    public function __construct($sensor_id ,$topic, $message)
     {
         $this->topic = $topic;
         $this->message = $message;
+        $this->sensor_id = $sensor_id;
     }
 }

@@ -19,6 +19,7 @@ use PhpMqtt\Client\Exceptions\MqttClientException;
 class HandleMqttMessage
 {
     protected $mqttService;
+    private $device_id = null;
 
     /**
      * @throws ConnectingToBrokerFailedException
@@ -45,13 +46,28 @@ class HandleMqttMessage
         // Store the received message in the database
 
 
-        $message = json_decode($event->message, true);
+        $message = isJson($event->message) ? json_decode($event->message, true) : $event->message;
 
-        // Get all variables that match the sensor_id (assuming the topic contains sensor_id)
-        $sensorId = $event->topic;
-
+        $sensorId = $event->sensor_id;
         $variables = Variable::where('sensor_id', $sensorId)->first();
 
+        if ($variables){
+            $this->handleIfVariablesSettled($variables , $message , $event);
+        }
+
+        $device_data = new Device_data();
+        $device_data->topic = $event->topic;
+        $device_data->sensor_id = $event->topic;
+        $device_data->device_id = $this->device_id;
+        $device_data->received_data = is_array($message) ? json_encode($message) : $message;
+
+        $device_data->save();
+
+    }
+
+
+    private function handleIfVariablesSettled($variables , $message , $event)
+    {
         $alert_index = $variables->alert_index;
         if (!is_array($variables->alert_index)) {
             try {
@@ -62,17 +78,10 @@ class HandleMqttMessage
         }
 
         $alertTriggered = false;
-        $uuid = $this->getValueFromIndex($message, $variables->uuid_index);
-        $device = Device::where('uuid', $uuid)->first();
-        if (!$device) {
-            $device = Device::query()->create(['uuid' => $uuid]);
-        }
 
-        $device_data = new Device_data();
-        $device_data->topic = $event->topic;
-        $device_data->sensor_id = $event->topic;
-        $device_data->device_id = $device->id;
-        $device_data->received_data = json_encode($message);
+        $uuid = $this->getValueFromIndex($message, $variables->uuid_index);
+        $device = $this->createDevice($uuid);
+        $this->device_id = $device->id;
         foreach ($alert_index as $alert) {
             if ($this->checkAndLogAlert($message, $alert)) {
                 $alertTriggered = true;
@@ -86,12 +95,9 @@ class HandleMqttMessage
             $json['uuid'] = $uuid;
             $server_message = json_encode($json);
             $this->sendSuccessMessage($event->topic, $server_message);
-            $device_data->sent_data = json_encode($server_message);
         }
-        $device_data->save();
 
     }
-
 
     private function sendSuccessMessage($topic, $server_message)
     {
@@ -117,15 +123,28 @@ class HandleMqttMessage
         return false;
     }
 
-    private function getValueFromIndex($array, $index)
+    private function getValueFromIndex($message, $index)
     {
+        $uuid = '' ;
+        if (!is_array($message)) return $uuid;
         $keys = explode('.', $index);
         foreach ($keys as $key) {
-            if (!isset($array[$key])) {
+            if (!isset($message[$key])) {
                 return null;
             }
-            $array = $array[$key];
+            $message = $message[$key];
         }
-        return $array;
+        return $message;
     }
+
+    private function createDevice($uuid)
+    {
+        if (!$uuid) return null;
+        $device = Device::where('uuid', $uuid)->first();
+        if (!$device) {
+            $device = Device::query()->create(['uuid' => $uuid]);
+        }
+        return $device;
+    }
+
 }

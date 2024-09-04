@@ -23,7 +23,6 @@
                                 <th class="tac">ای دی سنسور</th>
                                 <th class="tac">نمایش کامل</th>
                                 <th class="tac">مقدار دریافتی</th>
-                                <th class="tac">مقدار ارسالی</th>
                             </tr>
                             </thead>
 
@@ -39,7 +38,6 @@
                                 <td class="tac">-</td>
 
                                 <td class="tac">{{$record['received_data']}}</td>
-                                <td class="tac">{{$record['sent_data']}}</td>
                             </tr>
                             <?}}?>
                             </tbody>

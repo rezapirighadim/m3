@@ -42,8 +42,8 @@
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>شناسه اختصاصی (UUID)</label>
-                                    <input name="uuid" class="form-control ltr mono_font" value="<?=($ready ? $requestedData['uuid'] : "")?>" placeholder="uuid">
+                                    <label>تاپیک دریافت داده ها</label>
+                                    <input name="receive_topic" class="form-control ltr mono_font" value="<?=($ready ? $requestedData['receive_topic'] : "")?>" placeholder="Receive Topic">
                                 </div>
                             </div>
                         </div>
@@ -55,13 +55,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>تاپیک دریافت داده ها</label>
-                                    <input name="receive_topic" class="form-control ltr mono_font" value="<?=($ready ? $requestedData['receive_topic'] : "")?>" placeholder="Receive Topic">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label>تاپیک ارسال پاسخ</label>
                                     <input name="response_topic" class="form-control ltr mono_font" value="<?=($ready ? $requestedData['response_topic'] : "")?>" placeholder="Response Topic">

@@ -38,11 +38,12 @@ class ListenToMqtt extends Command
                 $this->mqttService->connect();
                 $this->info('MQTT connection established.');
 
-                $sensor_id = Sensor::first();
-                $sensor_id = $sensor_id->id ?? 'test/topic';
-                $this->mqttService->subscribe($sensor_id, function ($topic, $message) {
-                    event(new MqttMessageReceived($topic, $message));
-                });
+                $sensors = Sensor::query()->whereNotNull('receive_topic')->get();
+                foreach ($sensors as $sensor){
+                    $this->mqttService->subscribe($sensor->receive_topic ,  function ($topic, $message) use($sensor) {
+                        event(new MqttMessageReceived($sensor->id , $topic, $message));
+                    });
+                }
 
                 while ($this->mqttService->connected) {
                     $this->mqttService->client->loop(true); // Listen for messages
@@ -50,7 +51,7 @@ class ListenToMqtt extends Command
             } catch (MqttClientException $e) {
                 $this->error('MQTT connection failed: ' . $e->getMessage());
                 Log::error('MQTT connection failed: ' . $e->getMessage());
-                sleep(2); // Wait before attempting to reconnect
+                sleep(1); // Wait before attempting to reconnect
             }
         }
     }

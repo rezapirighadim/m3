@@ -15,7 +15,6 @@ class CreateSensorsTable extends Migration
     {
         Schema::create('sensors', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->nullable();
             $table->string('name')->nullable();
             $table->string('version')->nullable();
             $table->string('receive_topic')->nullable();

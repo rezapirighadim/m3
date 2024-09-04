@@ -15,11 +15,10 @@ class CreateDeviceDatasTable extends Migration
     {
         Schema::create('device_datas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('sensor_id');
+            $table->unsignedBigInteger('sensor_id')->nullable();
             $table->unsignedBigInteger('device_id')->nullable();
-            $table->string('topic')->nullable();
-            $table->json('received_data')->nullable();
-            $table->json('sent_data')->nullable();
+            $table->string('topic');
+            $table->text('received_data')->nullable();
             $table->timestamps();
         });
     }

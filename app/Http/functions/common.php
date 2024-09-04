@@ -1160,3 +1160,19 @@ function delete_directory($dirname) {
     rmdir($dirname);
     return true;
 }
+
+if (!function_exists('isJson')) {
+    /**
+     * Check if a given string is in JSON format.
+     *
+     * @param string $string
+     * @return bool
+     */
+    function isJson($string) {
+        // Check if the input is a string and decode it.
+        json_decode($string);
+
+        // Check if there was an error during decoding or if the input is not JSON.
+        return json_last_error() === JSON_ERROR_NONE;
+    }
+}

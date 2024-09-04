@@ -24,14 +24,12 @@ class SensorController extends AdminController
 
         $validData = $this->validate($request, [
             'name' => 'required|string|max:255',
-            'uuid' => 'required',
         ]);
 
         $sensor = Sensor::find($request->input('edit') );
         if (!$sensor) $sensor = new Sensor();
 
         $sensor->name = $request['name'];
-        $sensor->uuid = $request['uuid'];
         $sensor->version = $request['version'];
         $sensor->receive_topic = $request['receive_topic'];
         $sensor->response_topic = $request['response_topic'];
