@@ -8,6 +8,7 @@ use App\Models\Device;
 use App\Models\Device_data;
 use App\Models\MqttConnection;
 use App\Models\MqttMessage;
+use App\Models\Sensor;
 use App\Models\Variable;
 use App\Services\MqttService;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -95,7 +96,8 @@ class HandleMqttMessage
             $json['alert_triggered'] = $alertTriggered;
             $json['uuid'] = $uuid;
             $server_message = json_encode($json);
-            $this->sendSuccessMessage($event->topic, $server_message);
+            $sensor = Sensor::query()->whereId($event->sensor_id)->first();
+            $this->sendSuccessMessage( $sensor->response_topic , $server_message);
         }
 
     }
@@ -103,7 +105,7 @@ class HandleMqttMessage
     private function sendSuccessMessage($topic, $server_message)
     {
         try {
-            $this->mqttService->publish($topic . '/response', $server_message);
+            $this->mqttService->publish($topic , $server_message);
         } catch (MqttClientException $e) {
             Log::error('Failed to send MQTT success message: ' . $e->getMessage());
         }

@@ -230,8 +230,8 @@
                         data.alerts.forEach(function(alert) {
                             alertsHtml += '<tr>' +
                                 '<td>' + alert.id + '</td>' +
-                                '<td class="tac">' + alert.sensor_id + '</td>' +
-                                '<td class="tac mono_font">' + alert.sensor_uuid + '</td>' +
+                                '<td class="tac">' + ( alert.sensor_id ?  alert.sensor_id : '' ) + '</td>' +
+                                '<td class="tac mono_font">' + (alert.sensor_uuid ? alert.sensor_uuid : '' ) + '</td>' +
                                 '<td class="red">' + alert.alert_info + '</td>' +
                                 '<td class="tac">-</td>' +
                                 '<td class="tac">' + alert.topic + '</td>' +
@@ -246,7 +246,7 @@
                                 '<td class="tac">' + message.topic + '</td>' +
                                 '<td class="tac">' + (message.device_id ? message.device_id : '') + '</td>' +                                 '<td class="tac">' + message.sensor_id + '</td>' +
                                 '<td class="tac">-</td>' +
-                                '<td class="tal mono_font">' + message.received_data + '</td>' +
+                                '<td class="tal mono_font">' + (message.received_data ? message.received_data : '' ) + '</td>' +
                                 '<td class="tac">' +  '</td>' +
                                 '</tr>';
                         });
