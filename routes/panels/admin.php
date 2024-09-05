@@ -6,6 +6,7 @@ Route::namespace('Admin')->prefix('admin')->middleware([ 'ConvertArabic2Persian'
     Route::get('/', 'AdminController@index');
     Route::get('', 'AdminController@index');
     Route::get('/index', 'AdminController@index');
+    Route::get('/index/get_last_update', 'AdminController@get_last_update');
 
 
     //devices

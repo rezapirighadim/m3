@@ -36,18 +36,32 @@ class AdminController extends Controller
     }
 
     public function index() {
+
+        $data = $this->getData();
+
+        return View('admin.index', $data);
+    }
+
+    public function get_last_update()
+    {
+        $data = $this->getData();
+        return response()->json($data);
+    }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
         $data['title'] = "داشبورد";
         $data['path'] = "داشبورد";
-
         $data['mqtt_messages'] = Device_data::query()->limit(5)->latest()->get();
         $data['alerts'] = Alert::query()->limit(5)->latest()->get();
-
         $data['messages_total'] = Device_data::query()->count('*');
         $data['alerts_total'] = Alert::query()->count('*');
         $data['messages_last_hour'] = Device_data::query()->where('created_at', '>=', Carbon::now()->subHour())->count('*');
         $data['alerts_last_hour'] = Alert::query()->where('created_at', '>=', Carbon::now()->subHour())->count('*');
-
-        return View('admin.index', $data);
+        return $data;
     }
 
     private function getLastMonths($month)

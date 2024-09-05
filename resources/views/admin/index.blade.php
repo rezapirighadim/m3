@@ -82,7 +82,8 @@
                         <span class="pie-widget-count-1 pie-widget-count"></span>
                     </div>
                     <div style="margin-right: 30px ;margin-top: 20px;">
-                        <p class="tar"> تعداد کل پیام های دریافتی یک ساعت اخیر: <span
+                        <p class="tar">
+                            تعداد کل پیام های دریافتی یک ساعت اخیر: <span id="messages_last_hour"
                                 class="red">{{$messages_last_hour  ?? '1'}}</span></p>
                     </div>
 
@@ -95,7 +96,7 @@
                         <span class="pie-widget-count-2 pie-widget-count"></span>
                     </div>
                     <div style="margin-right: 30px ;margin-top: 20px;">
-                        <p class="tar"> تعداد کل پیام های دریافتی کل: <span class="red">{{$messages_total  ?? '0'}}</span>
+                        <p class="tar"> تعداد کل پیام های دریافتی کل: <span id="messages_total" class="red">{{$messages_total  ?? '0'}}</span>
                         </p>
                     </div>
 
@@ -108,7 +109,7 @@
                         <span class="pie-widget-count-3 pie-widget-count"></span>
                     </div>
                     <div style="margin-right: 30px ;margin-top: 20px;">
-                        <p class="tar"> تعداد کل هشدارهای دریافتی یک ساعت اخیر: <span
+                        <p class="tar"> تعداد کل هشدارهای دریافتی یک ساعت اخیر: <span id="alerts_last_hour"
                                 class="red">{{$alerts_last_hour  ?? '0'}}</span></p>
                     </div>
                 </div>
@@ -120,7 +121,7 @@
                         <span class="pie-widget-count-4 pie-widget-count"></span>
                     </div>
                     <div style="margin-right: 30px ;margin-top: 20px;">
-                        <p class="tar"> تعداد کل هشدارهای دریافتی: <span class="red">{{$alerts_total  ?? '0'}}</span></p>
+                        <p class="tar"> تعداد کل هشدارهای دریافتی: <span id="alerts_total" class="red">{{$alerts_total  ?? '0'}}</span></p>
                     </div>
 
 
@@ -138,7 +139,7 @@
         <!-- responsive table example -->
         <p>آخرین هشدار های دریافتی - <a href="/admin/mqtt_alerts">مشاهده تمام هشدار ها</a></p>
         <div class="pmd-card pmd-z-depth pmd-card-custom-view">
-            <table id="" class="table pmd-table table-hover table-striped  display responsive nowrap" cellspacing="0"
+            <table id="alerts_table" class="table pmd-table table-hover table-striped  display responsive nowrap" cellspacing="0"
                    width="100%">
                 <thead>
                 <tr>
@@ -176,7 +177,7 @@
         <p>آخرین پیام های دریافتی - <a href="/admin/mqtt_messages">مشاهده تمام پیام های دریافتی</a></p>
 
         <div class="pmd-card pmd-z-depth pmd-card-custom-view">
-            <table id="" class="table pmd-table table-hover table-striped  display responsive nowrap" cellspacing="0"
+            <table id="mqtt_messages_table" class="table pmd-table table-hover table-striped  display responsive nowrap" cellspacing="0"
                    width="100%">
                 <thead>
                 <tr>
@@ -211,5 +212,58 @@
             </table>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            function fetchDataAndUpdateSpans() {
+                $.ajax("/admin/index/get_last_update", {
+                    type: 'get',          // Assuming you want to get data from the server
+                    dataType: 'json',      // Expecting JSON data in response
+                    success: function (data) {
+                        $('#messages_total').text(data.messages_total);  // Update the span with ID "span2"
+                        $('#messages_last_hour').text(data.messages_last_hour);  // Update the span with ID "span2"
+                        $('#alerts_total').text(data.alerts_total);  // Update the span with ID "span1"
+                        $('#alerts_last_hour').text(data.alerts_last_hour);  // Update the span with ID "span1"
+
+                        // Update the alerts table
+                        var alertsHtml = '';
+                        data.alerts.forEach(function(alert) {
+                            alertsHtml += '<tr>' +
+                                '<td>' + alert.id + '</td>' +
+                                '<td class="tac">' + alert.sensor_id + '</td>' +
+                                '<td class="tac mono_font">' + alert.sensor_uuid + '</td>' +
+                                '<td class="red">' + alert.alert_info + '</td>' +
+                                '<td class="tac">-</td>' +
+                                '<td class="tac">' + alert.topic + '</td>' +
+                                '</tr>';
+                        });
+                        $('#alerts_table tbody').html(alertsHtml);
+
+                        var mqttMessagesHtml = '';
+                        data.mqtt_messages.forEach(function(message) {
+                            mqttMessagesHtml += '<tr>' +
+                                '<td>' + message.id + '</td>' +
+                                '<td class="tac">' + message.topic + '</td>' +
+                                '<td class="tac">' + (message.device_id ? message.device_id : '') + '</td>' +                                 '<td class="tac">' + message.sensor_id + '</td>' +
+                                '<td class="tac">-</td>' +
+                                '<td class="tal mono_font">' + message.received_data + '</td>' +
+                                '<td class="tac">' +  '</td>' +
+                                '</tr>';
+                        });
+                        $('#mqtt_messages_table tbody').html(mqttMessagesHtml);
+
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle error
+                        console.log("Error occurred while fetching data:", error);
+                    }
+                });
+            }
+
+            // Call fetchDataAndUpdateSpans every 2 seconds
+            setInterval(fetchDataAndUpdateSpans, 1000);
+        });
+
+    </script>
 
 @endsection
